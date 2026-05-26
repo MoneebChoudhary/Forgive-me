@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Someone Special</title>
+    <style>
+        :root {
+            --primary: #d4a373;
+            --secondary: #fefae0;
+            --accent: #e63946;
+            --bg-grad: linear-gradient(135deg, #faedcd 0%, #f3c68f 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: var(--bg-grad);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* Floating Background Elements */
+        .hearts-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            display: block;
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            background: rgba(230, 57, 70, 0.2);
+            animation: animate 25s linear infinite;
+            bottom: -150px;
+            border-radius: 50%;
+        }
+
+        @keyframes animate {
+            0%{ transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
+            100%{ transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; }
+        }
+
+        /* Main Container */
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 2;
+            transition: all 0.5s ease;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .eid-wish {
+            color: #b76e79;
+            font-weight: bold;
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+        }
+
+        /* Envelope / Letter Section */
+        .envelope-wrapper {
+            cursor: pointer;
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px dashed var(--primary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            margin-bottom: 25px;
+        }
+
+        .envelope-wrapper:hover {
+            transform: translateY(-5px);
+        }
+
+        .letter-preview-text {
+            color: #666;
+            font-style: italic;
+        }
+
+        .full-letter {
+            display: none;
+            text-align: left;
+            line-height: 1.6;
+            color: #444;
+            background: #fffdf9;
+            padding: 20px;
+            border-left: 4px solid var(--primary);
+            border-radius: 5px;
+            margin-top: 15px;
+            font-size: 1.05rem;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Interactive Gift Box */
+        .gift-section {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .gift-box {
+            font-size: 4rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+
+        .gift-reveal {
+            display: none;
+            margin-top: 15px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .gift-items {
+            font-size: 3rem;
+            letter-spacing: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Utility Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 4px 10px rgba(230, 57, 70, 0.3);
+            transition: background 0.2s;
+        }
+
+        .btn:hover { background: #c92a3a; }
+    </style>
+</head>
+<body>
+
+    <div class="hearts-bg" id="heartsContainer"></div>
+
+    <div class="container">
+        <h1>SORRY FATIMA😔</h1>
+        <div class="eid-wish">I just wanna say you something...</div>
+
+        <div class="envelope-wrapper" id="envelope" onclick="openLetter()">
+            <div id="envelopeIcon" style="font-size: 3rem; margin-bottom: 10px;">✉️</div>
+            <p id="clickText" class="letter-preview-text">You sent me alot when I was mad. Here's something for you. (Click to open)</p>
+            
+            <div class="full-letter" id="letterContent">
+                <strong>Hey,</strong><br><br>
+                I could never able to intentionally hurt someone as wonderful as you. 
+                I understand my ignorance and impulsiveness hurt you a lot and I really regret doing what I did.<br><br>
+                I am truly truly sorry. Let's not let my mistakes ruin this beautiful day. Happy Eid. ✨
+            </div>
+        </div>
+
+        <div class="gift-section" id="giftSection">
+            <p style="color: #555; font-weight: 500; margin-bottom: 10px;">And since you always send me sweet things, here is a small digital token for you:</p>
+            <div class="gift-box" id="giftBox" onclick="openGift()">🎁</div>
+            
+            <div class="gift-reveal" id="giftReveal">
+                <div class="gift-items">🍫🍰🧁💝</div>
+                <p style="color: #666; font-style: italic; font-size: 0.95rem;">A box of virtual chocolates and cakes until I can give you real ones!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dynamically create background decorative floating circles/hearts
+        const container = document.getElementById('heartsContainer');
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.width = Math.random() * 30 + 10 + 'px';
+            heart.style.height = heart.style.width;
+            heart.style.animationDelay = Math.random() * 10 + 's';
+            heart.style.animationDuration = Math.random() * 10 + 15 + 's';
+            container.appendChild(heart);
+        }
+
+        function openLetter() {
+            document.getElementById('letterContent').style.display = 'block';
+            document.getElementById('envelopeIcon').innerHTML = '📂';
+            document.getElementById('clickText').style.display = 'none';
+            
+            // Show the gift section smoothly after reading the letter
+            setTimeout(() => {
+                document.getElementById('giftSection').style.display = 'block';
+            }, 800);
+        }
+
+        function openGift() {
+            const giftBox = document.getElementById('giftBox');
+            giftBox.style.animation = 'none';
+            giftBox.innerHTML = '✨📦✨';
+            document.getElementById('giftReveal').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
